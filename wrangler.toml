@@ -1,0 +1,22 @@
+name = "todos-api"
+compatibility_date = "2023-12-01"
+
+[vars]
+APP_ENV = "development"
+
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
+[[d1_databases]]
+binding = "D1" # i.e. available in your Worker on env.DB
+database_name = "todos-api-d1-dev"
+database_id = "8d860bf8-5777-4e07-875c-aa60c65e1d70"
+migrations_dir = "./src/db/migration"
+
+# [ai]
+# binding = "AI"
