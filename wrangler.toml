@@ -20,3 +20,7 @@ migrations_dir = "./src/db/migration"
 
 # [ai]
 # binding = "AI"
+
+# Delete expired session schedule
+[triggers]
+crons = ["0 * * * *"]
