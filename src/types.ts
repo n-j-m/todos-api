@@ -6,6 +6,7 @@ export type AppEnv = {
   D1: D1Database;
   APP_ENV: string;
   JWT_SECRET: string;
+  CORS_ORIGIN: string;
 };
 
 export type AppDb = ReturnType<typeof getDb>;

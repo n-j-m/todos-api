@@ -7,12 +7,29 @@ import { initApp } from "@/utils/app-factory";
 import { createFactory } from "hono/factory";
 import { getLucia } from "./utils/get-lucia";
 import { getDb } from "./db";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
 
 const factory = createFactory<AppContext>({
   initApp: initApp,
 });
 
 const app = factory.createApp();
+
+app.use(logger());
+
+app.use(
+  "/api/*",
+  cors({
+    origin: (origin, c) => {
+      const { CORS_ORIGIN } = c.env;
+      return CORS_ORIGIN;
+    },
+    allowHeaders: ["*"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
 
 app
   .basePath("/api")
@@ -29,11 +46,14 @@ app.get("/", (c) => {
 
 export default {
   fetch: app.fetch,
-  async scheduled(controller: ScheduledController, env: AppEnv, ctx: ExecutionContext) {
+  async scheduled(
+    controller: ScheduledController,
+    env: AppEnv,
+    ctx: ExecutionContext
+  ) {
     const D1 = env.D1;
     const db = getDb(D1);
     const lucia = getLucia(db);
     await lucia.deleteExpiredSessions();
-  }
-
+  },
 };
