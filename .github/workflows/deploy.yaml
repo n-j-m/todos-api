@@ -19,4 +19,4 @@ jobs:
             JWT_SECRET
         env:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          CORS_ORIGIN: ${{ vars.CORS_ORIGIN }}
+          CORS_ORIGINS: ${{ vars.CORS_ORIGINS }}
