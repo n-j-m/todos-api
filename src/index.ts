@@ -20,34 +20,31 @@ const app = factory.createApp();
 
 app.use(logger());
 
-app.use(
-  "/api/*",
-  cors({
-    origin: (origin, c: Context<AppContext>) => {
-      const { CORS_ORIGINS } = env(c);
-      console.log("origins:", CORS_ORIGINS);
-      const origins = CORS_ORIGINS.split(",");
-      const matched = origins.find((o) => o === origin);
-      return matched;
-    },
-    allowHeaders: ["*"],
-    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-  }),
-);
-
 app
   .basePath("/api")
+  .use(
+    cors({
+      origin: (origin, c: Context<AppContext>) => {
+        const { CORS_ORIGINS } = env(c);
+        console.log("origins:", CORS_ORIGINS);
+        const origins = CORS_ORIGINS.split(",");
+        const matched = origins.find((o) => o === origin);
+        return matched;
+      },
+      allowHeaders: ["*"],
+      allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      credentials: true,
+    }),
+  )
   .route("/signup", signupRoutes)
   .route("/login", loginRoutes)
   .route("/lists", todoListRoutes)
   .route("/lists/:listId", todoListIdRoutes)
   .route("/lists/:listId/todos", todosRoutes)
-  .route("/lists/:listId/todos/:todoId", todoIdRoutes);
-
-app.get("/api/healthcheck", (c) => {
-  return c.text("Hello Hono!");
-});
+  .route("/lists/:listId/todos/:todoId", todoIdRoutes)
+  .get("/healthcheck", (c) => {
+    return c.text("Hello Hono!");
+  });
 
 export default {
   fetch: app.fetch,
