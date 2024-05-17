@@ -22,13 +22,15 @@ app.use(
   "/api/*",
   cors({
     origin: (origin, c) => {
-      const { CORS_ORIGIN } = c.env;
-      return CORS_ORIGIN;
+      const { CORS_ORIGINS } = c.env;
+      const origins = CORS_ORIGINS.split(",");
+      const matched = origins.find((o) => o === origin);
+      return matched;
     },
     allowHeaders: ["*"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
-  })
+  }),
 );
 
 app
@@ -40,7 +42,7 @@ app
   .route("/lists/:listId/todos", todosRoutes)
   .route("/lists/:listId/todos/:todoId", todoIdRoutes);
 
-app.get("/", (c) => {
+app.get("/api/healthcheck", (c) => {
   return c.text("Hello Hono!");
 });
 
@@ -49,7 +51,7 @@ export default {
   async scheduled(
     controller: ScheduledController,
     env: AppEnv,
-    ctx: ExecutionContext
+    ctx: ExecutionContext,
   ) {
     const D1 = env.D1;
     const db = getDb(D1);

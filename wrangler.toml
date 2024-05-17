@@ -4,6 +4,10 @@ compatibility_date = "2023-12-01"
 
 [vars]
 APP_ENV = "development"
+CORS_ORIGINS = "http://localhost:5173"
+
+[env.production.vars]
+APP_ENV = "production"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
