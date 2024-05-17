@@ -2,7 +2,7 @@ name = "todos-api"
 main = "src/index.ts"
 compatibility_date = "2023-12-01"
 
-[vars]
+[env.development.vars]
 APP_ENV = "development"
 CORS_ORIGINS = "http://localhost:5173"
 
@@ -18,7 +18,7 @@ CORS_ORIGINS = "https://todos-ui.pages.dev,http://localhost:5173"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-[[d1_databases]]
+[[env.development.d1_databases]]
 binding = "D1" # i.e. available in your Worker on env.DB
 database_name = "todos-api-d1-dev"
 database_id = "8d860bf8-5777-4e07-875c-aa60c65e1d70"
