@@ -9,6 +9,8 @@ import { getLucia } from "./utils/get-lucia";
 import { getDb } from "./db";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
+import { env } from "hono/adapter";
+import { Context } from "hono";
 
 const factory = createFactory<AppContext>({
   initApp: initApp,
@@ -21,8 +23,9 @@ app.use(logger());
 app.use(
   "/api/*",
   cors({
-    origin: (origin, c) => {
-      const { CORS_ORIGINS } = c.env;
+    origin: (origin, c: Context<AppContext>) => {
+      const { CORS_ORIGINS } = env(c);
+      console.log("origins:", CORS_ORIGINS);
       const origins = CORS_ORIGINS.split(",");
       const matched = origins.find((o) => o === origin);
       return matched;
