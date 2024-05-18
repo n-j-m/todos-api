@@ -3,6 +3,10 @@ main = "src/index.ts"
 compatibility_date = "2023-12-01"
 
 [vars]
+APP_ENV = "production"
+CORS_ORIGINS = "https://todos-ui.pages.dev"
+
+[env.development.vars]
 APP_ENV = "development"
 CORS_ORIGINS = "http://localhost:5173"
 
