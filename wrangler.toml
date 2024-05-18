@@ -18,13 +18,7 @@ CORS_ORIGINS = "http://localhost:5173"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-[[env.development.d1_databases]]
-binding = "D1" # i.e. available in your Worker on env.DB
-database_name = "todos-api-d1-dev"
-database_id = "8d860bf8-5777-4e07-875c-aa60c65e1d70"
-migrations_dir = "./src/db/migration"
-
-[[env.production.d1_databases]]
+[[d1_databases]]
 binding = "D1" # i.e. available in your Worker on env.DB
 database_name = "todos-api-d1-dev"
 database_id = "8d860bf8-5777-4e07-875c-aa60c65e1d70"
